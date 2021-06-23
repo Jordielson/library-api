@@ -1,0 +1,12 @@
+package edu.bd2.projeto1.api_biblioteca;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ApirestApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ApirestApplication.class, args);
+	}
+}
