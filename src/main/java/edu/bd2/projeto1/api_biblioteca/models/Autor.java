@@ -30,7 +30,7 @@ public class Autor extends RepresentationModel<Autor> implements Serializable {
 		this.primeroNome = primeroNome;
 		this.sobreNome = sobreNome;
 	}
-
+	// Cometario de teste
 	public int getId() {
 		return id;
 	}
