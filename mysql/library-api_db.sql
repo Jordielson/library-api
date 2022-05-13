@@ -45,21 +45,21 @@ CREATE TABLE autor_livro (
 );
 
 CREATE TABLE usuario(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	cpf VARCHAR(15) NOT NULL,
+	cpf VARCHAR(15) PRIMARY KEY NOT NULL,
 	nome VARCHAR(60) NOT NULL,
+	senha VARCHAR(255) NOT NULL,
 	cidade VARCHAR(40) NOT NULL,
 	bairro VARCHAR(40) NOT NULL,
 	rua VARCHAR(60) NOT NULL
 );
 
 CREATE TABLE email(
-	usuario INT,
+	usuario VARCHAR(15),
 	email VARCHAR(50) NOT NULL,
 	PRIMARY KEY(usuario, email),
 	CONSTRAINT fk_user_email
 	FOREIGN KEY(usuario)
-	REFERENCES usuario(id)
+	REFERENCES usuario(cpf)
 );
 
 CREATE TABLE cadastro_livro (
@@ -73,16 +73,33 @@ CREATE TABLE cadastro_livro (
 
 CREATE TABLE emprestimo (
 	cadastro_id INT,	
-	usuario_id INT,
+	usuario_id VARCHAR(15),
 	`data` DATE NOT NULL,
 	PRIMARY KEY(cadastro_id, usuario_id),
 	CONSTRAINT fk_user_emp
 	FOREIGN KEY(usuario_id)
-	REFERENCES usuario(id),
+	REFERENCES usuario(cpf),
 	CONSTRAINT fk_cadastro_emp
 	FOREIGN KEY(cadastro_id)
 	REFERENCES cadastro_livro(id)
 );
+
+CREATE TABLE `role`(
+	papel VARCHAR(15) PRIMARY KEY NOT NULL
+);
+
+CREATE TABLE role_user(
+	user_id VARCHAR(15) NOT NULL,
+	role_id VARCHAR(15) NOT NULL,
+	PRIMARY KEY(user_id, role_id),
+	CONSTRAINT fk_role_ru
+	FOREIGN KEY(role_id)
+	REFERENCES `role`(papel),
+	CONSTRAINT fk_user_ru
+	FOREIGN KEY(user_id)
+	REFERENCES usuario(cpf)
+);
+
 
 /* One insert for each tables */ 
 INSERT INTO autor
@@ -110,19 +127,28 @@ INSERT INTO cadastro_livro
 VALUES(1, '2017/11/21');
 
 INSERT INTO usuario
-(cpf, nome, cidade, bairro, rua)
-VALUES('156456645', 'joao', 'sume', 'centro', 'joaquim basto');
+(cpf, nome, senha, cidade, bairro, rua)
+VALUES('156456645', 'joao', '$2a$10$Huy5rAQj/aoEnceH.aAikuS.L/Esu1IepslyMu6b41nWPMa1aV6ge', 'sume', 'centro', 'joaquim basto');
+--Senha: 123
 
 INSERT INTO email
 (usuario, email)
-VALUES(1, 'joao@gmail.com');
+VALUES('156456645', 'joao@gmail.com');
 
 INSERT INTO emprestimo
 (cadastro_id, usuario_id, `data`)
-VALUES(1, 1, '2021/01/12');
+VALUES(1, '156456645', '2021/01/12');
 
+INSERT INTO `role`
+(papel)
+VALUES
+("ROLE_ADMIM"),
+("ROLE_MANAGEMENT"),
+("ROLE_SALES"),
+("ROLE_USER");
 
-
-
-
-
+INSERT INTO role_user
+(user_id, role_id)
+VALUES
+('156456645', 'ROLE_USER'),
+('156456645', 'ROLE_ADMIM');

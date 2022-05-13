@@ -80,6 +80,6 @@ public class Emprestimo extends RepresentationModel<Emprestimo> implements Seria
 	
 	@Override
 	public String toString() {
-		return "Usuario(id="+ usuarioId.getId()+", nome="+ usuarioId.getNome() + "), Livro(id="+ cadastroId.getId()+", nome=" + cadastroId.getLivro().getTitulo() + "), Data: " + data;
+		return "Usuario(cof="+ usuarioId.getCpf()+", nome="+ usuarioId.getNome() + "), Livro(id="+ cadastroId.getId()+", nome=" + cadastroId.getLivro().getTitulo() + "), Data: " + data;
 	}
 }
